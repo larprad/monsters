@@ -1,0 +1,62 @@
+@import './helper.css';
+
+h1 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.2em;
+  font-weight: normal;
+}
+
+.App {
+  padding: 0.5em;
+  background-color: darkgrey;
+  grid-area: app;
+  height: 100%;
+  overflow-x: hidden;
+  display: grid;
+  grid-gap: 0.5em;
+  grid-template: 1fr 80% 1fr / 100%;
+  grid-template-areas:
+    'header'
+    'monsters'
+    'actions';
+}
+
+.App-header {
+  grid-area: header;
+  background-color: antiquewhite;
+}
+
+.App-monsters {
+  grid-area: monsters;
+  background-color: gainsboro;
+  overflow-y: scroll;
+}
+
+.monsterTuile {
+  box-sizing: border-box;
+  height: 5em;
+  background-color: honeydew;
+  margin: 0.5em;
+}
+
+.monsterTuile img {
+  width: 4.5em;
+  height: 4.5em;
+  border-radius: 50%;
+  margin: 0 1em;
+  object-fit: cover;
+}
+
+.App-actions {
+  grid-area: actions;
+  background-color: goldenrod;
+}
