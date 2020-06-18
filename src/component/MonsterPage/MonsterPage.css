@@ -1,0 +1,42 @@
+.monsterSection {
+  grid-area: 1 / 1 / span 2 / 1;
+  display: grid;
+  grid-template: 40% 1fr 2fr 2fr / 1fr 1fr;
+  grid-template-areas:
+    'monsterImg monsterImg'
+    'monsterTitle monsterTitle'
+    'monsterDescription monsterDescription'
+    'monsterSpecial monsterSpecs';
+  grid-gap: 0.5em;
+  background-color: indianred;
+}
+
+.monsterImg {
+  grid-area: monsterImg;
+}
+
+.monsterImg img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.monsterTitle {
+  grid-area: monsterTitle;
+  background-color: burlywood;
+}
+
+.monsterDescription {
+  grid-area: monsterDescription;
+  background-color: burlywood;
+}
+
+.monsterSpecial {
+  grid-area: monsterSpecial;
+  background-color: burlywood;
+}
+
+.monsterSpecs {
+  grid-area: monsterSpecs;
+  background-color: burlywood;
+}

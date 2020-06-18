@@ -4,6 +4,13 @@ import './style/reset.css';
 import './style/index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+// import {
+//   BrowserRouter as Router,
+//   Routes,
+//   Route,
+//   Link,
+//   Outlet,
+// } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>

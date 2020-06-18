@@ -1,0 +1,4 @@
+.App-actions {
+    grid-area: actions;
+    background-color: goldenrod;
+  }
