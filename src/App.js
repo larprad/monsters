@@ -72,7 +72,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home status="home" />}></Route>
-        <Route path=":monster" element={<MonsterPage status="read" />}></Route>
+        <Route exact path=":monster" element={<MonsterPage status="read" />}></Route>
         <Route path=":monster/edit" element={<MonsterPage status="edit" />} />
         {/* <Route path=":monster/hook" element={<MonsterPageHook />} /> */}
         <Route path="/new" element={<MonsterPage status="new" />} />

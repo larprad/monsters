@@ -6,7 +6,23 @@ function Save(props) {
   function handleSaveClick() {
     props.save();
   }
-  return <button onClick={handleSaveClick}>Save</button>;
+  // const { monster } = useParams();
+  return (
+    <Link to={`/${props.monsterSlug}`}>
+      <button onClick={handleSaveClick}>Save</button>
+    </Link>
+  );
+}
+
+function Delete(props) {
+  function handleDeleteClick() {
+    props.delete();
+  }
+  return (
+    <Link to="/">
+      <button onClick={handleDeleteClick}>Delete</button>
+    </Link>
+  );
 }
 
 function Edit(props) {
@@ -42,7 +58,6 @@ function Cancel(props) {
     props.statusChange('edit');
   }
   const { monster } = useParams();
-  console.log(props);
   return (
     <Link to={`/${monster}`}>
       <button onClick={handleStatusChange}>Cancel</button>
@@ -62,20 +77,21 @@ function Actions(props) {
           <div className="containerFull flexCenter spaceEvenly">
             <Back />
             <Edit statusChange={props.statusChange} />
+            <Delete delete={props.delete} />
           </div>
         );
       case 'edit':
         return (
           <div className="containerFull flexCenter spaceEvenly">
             <Cancel statusChange={props.statusChange} />
-            <Save save={props.save} />
+            <Save save={props.edit} monsterSlug={props.monsterSlug} />
           </div>
         );
       case 'new':
         return (
           <div className="containerFull flexCenter spaceEvenly">
             <Back />
-            <Save save={props.save} />
+            <Save save={props.save} monsterSlug={props.monsterSlug} />
           </div>
         );
       case 'home':

@@ -1,36 +1,23 @@
 import monsters from './monsters';
 
 const manipulate = {
-  validateContent(assetToCheck, dataPool) {
-    for (let unit in dataPool) {
-      if (!assetToCheck) {
-        return {
-          status: false,
-          message: 'Name should not be empty',
-        };
-      }
-      if (unit.toLowerCase() === assetToCheck.toLowerCase()) {
-        return {
-          status: false,
-          message: 'Name is already existing',
-        };
-      }
-    }
-    return {
-      status: true,
-      message: 'Monster saved',
-    };
-  },
-
   saveNewMonster(data) {
-    const checkResult = this.validateContent(data.name, monsters);
-    if (checkResult.status) {
-      monsters[data.slug.toLowerCase()] = data;
-    }
-    return checkResult;
+    monsters[data.slug] = data;
+    console.log(`monster ${data.slug} saved`);
   },
 
-  editMonster(data) {},
+  deleteMonster(monsterKey) {
+    const deleted = delete monsters[monsterKey];
+    deleted
+      ? console.log(`${monsterKey} have been deleted`)
+      : console.error(`${monsterKey} not properly deleted`);
+  },
+
+  editMonster(data, originalMonsterKey) {
+    console.log(originalMonsterKey);
+    delete monsters[originalMonsterKey]; // seriously non optimized
+    monsters[data.slug] = data;
+  },
 };
 
 export default manipulate;

@@ -3,22 +3,71 @@ import Actions from '../Actions/Actions';
 import './MonsterPage.css';
 import { useParams } from 'react-router-dom';
 import monsters from '../../data/monsters';
-// import manipulate from '../../data/manipulate';
+import manipulate from '../../data/manipulate';
+
+// COMPONENTS
+////////////////////////
 
 function MonsterImage(props) {
-  return (
-    <div className="monsterImg">
-      <img src={props.img} alt={props.name}></img>
-    </div>
-  );
+  function statusCheck(status) {
+    if (status === 'edit' || status === 'new') {
+      return (
+        <div
+          className="monsterImg flexCenter"
+          style={{
+            backgroundImage: 'url(' + props.img + ')',
+            backgroundSize: 'cover',
+          }}
+        >
+          <input onChange={props.change} placeholder="Image url"></input>
+        </div>
+      );
+    } else {
+      return (
+        <div className="monsterImg">
+          <img src={props.img} alt={props.name}></img>
+        </div>
+      );
+    }
+  }
+
+  return statusCheck(props.status);
 }
 
 function MonsterName(props) {
-  return <h2 className="monsterTitle flexCenter">{props.name}</h2>;
+  function statusCheck(status) {
+    if (status === 'edit' || status === 'new') {
+      return (
+        <input
+          className="monsterTitle flexCenter"
+          placeholder="Monster name"
+          value={props.name}
+          onChange={props.change}
+        ></input>
+      );
+    } else {
+      return <h2 className="monsterTitle flexCenter">{props.name}</h2>;
+    }
+  }
+  return statusCheck(props.status);
 }
 
 function MonsterDescription(props) {
-  return <p className="monsterDescription flexCenter">{props.description}</p>;
+  function statusCheck(status) {
+    if (status === 'edit' || status === 'new') {
+      return (
+        <textarea
+          className="monsterDescription flexCenter"
+          placeholder="Description"
+          value={props.description}
+          onChange={props.change}
+        ></textarea>
+      );
+    } else {
+      return <p className="monsterDescription flexCenter">{props.description}</p>;
+    }
+  }
+  return statusCheck(props.status);
 }
 
 function MonsterSpecial(props) {
@@ -47,9 +96,15 @@ function MonsterSpecs(props) {
 
 function MonsterPage(props) {
   const { monster } = useParams();
-  const { name, description, img, special, specs } = monsters[monster]
-    ? monsters[monster]
-    : { name: '', description: '', img: '', special: [], specs: {} };
+  const originalMonsterSlug = monster;
+  const { name, description, img, special, specs } = monsters[monster] || {
+    name: '',
+    slug: '',
+    description: '',
+    img: '',
+    special: [],
+    specs: {},
+  };
 
   // STATES
   ////////////////////////
@@ -58,21 +113,12 @@ function MonsterPage(props) {
   const [monsterImage, setMonsterImage] = useState(img);
   const [status, setStatus] = useState(props.status);
 
-  // const [displayPopup, setDisplayPopup] = useState(false);
-  // const [redirectPopup, setRedirectPopup] = useState(false);
-  // const [textPopup, setTextPopup] = useState('no text');
-
   useEffect(() => {
     setStatus(props.status);
   }, [props.status]);
 
   // FUNCTIONS
   ////////////////////////
-
-  // function closePopup() {
-  //   setDisplayPopup(false);
-  //   setTextPopup('no text');
-  // }
 
   function handleChangeMonsterName(e) {
     const newName = e.target.value;
@@ -85,6 +131,7 @@ function MonsterPage(props) {
   }
 
   function handleChangeMonsterImage(e) {
+    console.log('setting monster image');
     const newImg = e.target.value;
     setMonsterImage(newImg);
   }
@@ -94,19 +141,33 @@ function MonsterPage(props) {
   }
 
   function saveMonster() {
-    let newMonster = {
+    const monsterToSave = {
       name: monsterName,
       description: monsterDescription,
+      img: monsterImage,
       slug: monsterName.toLowerCase(),
       special: [],
       specs: {},
-      img: monsterImage,
     };
-    console.log(newMonster);
-    //   const saveResult = manipulate.saveNewMonster(newMonster);
-    // setDisplayPopup(true);
-    // setTextPopup(saveResult.message);
-    // setRedirectPopup(saveResult.status ? newMonster.slug : false);
+    manipulate.saveNewMonster(monsterToSave);
+    statusChange('read');
+  }
+
+  function editMonster() {
+    const monsterToEdit = {
+      name: monsterName,
+      description: monsterDescription,
+      img: monsterImage,
+      slug: monsterName.toLowerCase(),
+      special: [],
+      specs: {},
+    };
+    manipulate.editMonster(monsterToEdit, originalMonsterSlug);
+    statusChange('read');
+  }
+
+  function deleteMonster() {
+    manipulate.deleteMonster(monster);
   }
 
   // RENDER
@@ -125,7 +186,14 @@ function MonsterPage(props) {
         <MonsterSpecial special={special} status={status} />
         <MonsterSpecs specs={specs} status={status} />
       </section>
-      <Actions status={status} statusChange={statusChange} save={saveMonster} />
+      <Actions
+        status={status}
+        statusChange={statusChange}
+        save={saveMonster}
+        edit={editMonster}
+        delete={deleteMonster}
+        monsterSlug={monsterName.toLowerCase()}
+      />
     </div>
   );
 }
