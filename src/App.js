@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './style/App.css';
-import monsters from './data/monsters';
+// import monsters from './data/monsters';
 import Actions from './component/Actions/Actions';
 import { MonsterPage } from './component/MonsterPage/MonsterPage';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
@@ -13,12 +13,22 @@ function Header() {
   );
 }
 
-function MonsterStore() {
+///////////////////////////////
+
+//https://www.robinwieruch.de/react-fetching-data
+//https://www.robinwieruch.de/react-hooks-fetch-data
+
+//////////////////////////////
+
+function MonsterStore(props) {
+  const monsterData = props.monsters;
   return (
     <div className="App-monsters">
-      {Object.entries(monsters).map(([monsterName, monsterData]) => (
-        <MonsterTuile key={monsterData.slug} monster={monsterData} />
-      ))}
+      {monsterData
+        ? Object.entries(monsterData).map(([monsterName, monsterData]) => (
+            <MonsterTuile key={monsterData.slug} monster={monsterData} />
+          ))
+        : null}
     </div>
   );
 }
@@ -47,10 +57,27 @@ function MonsterTuile(props) {
 }
 
 function Home() {
+  const [monsterData, setMonsterData] = useState({});
+
+  useEffect(() => {
+    async function getAllMonsters() {
+      let response = await fetch('/allMonsters');
+      if (response.ok) {
+        let responseJSON = await response.json();
+        console.log('treatin responseJSON');
+        console.log(responseJSON);
+        setMonsterData(responseJSON);
+      } else {
+        console.error('error fetching monster data');
+      }
+    }
+    getAllMonsters();
+  }, []);
+
   return (
     <div className="App">
       <Header />
-      <MonsterStore />
+      <MonsterStore monsters={monsterData} />
       <Actions status="home" />
     </div>
   );

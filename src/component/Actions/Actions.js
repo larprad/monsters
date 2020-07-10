@@ -47,7 +47,7 @@ function Back() {
 
 function New() {
   return (
-    <Link to="/new">
+    <Link to={'/new'}>
       <button>New</button>
     </Link>
   );
@@ -67,6 +67,15 @@ function Cancel(props) {
 
 function Filter() {
   return <button>Filter</button>;
+}
+
+function Fetch() {
+  async function fecthData() {
+    let response = await fetch('/allMonsters');
+    let responseJSON = await response.json();
+    console.log(responseJSON);
+  }
+  return <button onClick={fecthData}>Fetch</button>;
 }
 
 function Actions(props) {
@@ -99,6 +108,7 @@ function Actions(props) {
           <div className="containerFull flexCenter spaceEvenly">
             <Filter />
             <New />
+            <Fetch />
           </div>
         );
       default:

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Actions from '../Actions/Actions';
 import './MonsterPage.css';
 import { useParams } from 'react-router-dom';
-import monsters from '../../data/monsters';
 import manipulate from '../../data/manipulate';
 
 // COMPONENTS
@@ -36,6 +35,7 @@ function MonsterImage(props) {
 
 function MonsterName(props) {
   function statusCheck(status) {
+    console.log('I am here');
     if (status === 'edit' || status === 'new') {
       return (
         <input
@@ -97,25 +97,38 @@ function MonsterSpecs(props) {
 function MonsterPage(props) {
   const { monster } = useParams();
   const originalMonsterSlug = monster;
-  const { name, description, img, special, specs } = monsters[monster] || {
-    name: '',
-    slug: '',
-    description: '',
-    img: '',
-    special: [],
-    specs: {},
-  };
 
   // STATES
   ////////////////////////
-  const [monsterName, setMonsterName] = useState(name);
-  const [monsterDescription, setMonsterDescription] = useState(description);
-  const [monsterImage, setMonsterImage] = useState(img);
+  const [monsterName, setMonsterName] = useState('name');
+  const [monsterDescription, setMonsterDescription] = useState('description');
+  const [monsterImage, setMonsterImage] = useState('');
+  const [monsterSpecial] = useState([]);
+  const [monsterSpecs] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState(props.status);
+  const [urlToFetch] = useState(`monster/${monster}`);
 
   useEffect(() => {
     setStatus(props.status);
   }, [props.status]);
+
+  useEffect(() => {
+    async function getMonster() {
+      setIsLoading(true);
+      let response = await fetch(urlToFetch);
+      if (response.ok) {
+        let responseJSON = await response.json();
+        setMonsterName(responseJSON.name);
+        setMonsterDescription(responseJSON.description);
+        setMonsterImage(responseJSON.img);
+        setIsLoading(false);
+      } else {
+        console.error('error while fetching a monster data');
+      }
+    }
+    getMonster();
+  }, [urlToFetch]);
 
   // FUNCTIONS
   ////////////////////////
@@ -175,17 +188,22 @@ function MonsterPage(props) {
 
   return (
     <div className="App">
-      <section className="monsterSection">
-        <MonsterImage img={monsterImage} status={status} change={handleChangeMonsterImage} />
-        <MonsterName name={monsterName} status={status} change={handleChangeMonsterName} />
-        <MonsterDescription
-          description={monsterDescription}
-          status={status}
-          change={handleChangeMonsterDescription}
-        />
-        <MonsterSpecial special={special} status={status} />
-        <MonsterSpecs specs={specs} status={status} />
-      </section>
+      {isLoading ? (
+        <h2 className="loading">LOADING</h2>
+      ) : (
+        <section className="monsterSection">
+          <MonsterImage img={monsterImage} status={status} change={handleChangeMonsterImage} />
+          <MonsterName name={monsterName} status={status} change={handleChangeMonsterName} />
+          <MonsterDescription
+            description={monsterDescription}
+            status={status}
+            change={handleChangeMonsterDescription}
+          />
+          <MonsterSpecial special={monsterSpecial} status={status} />
+          <MonsterSpecs specs={monsterSpecs} status={status} />
+        </section>
+      )}
+
       <Actions
         status={status}
         statusChange={statusChange}
