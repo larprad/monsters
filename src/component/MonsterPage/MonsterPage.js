@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Actions from '../Actions/Actions';
+import { Actions } from '../Actions/Actions';
 import './MonsterPage.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import manipulate from '../../data/manipulate';
+import Popup from '../Popup/Popup';
 
 // COMPONENTS
 ////////////////////////
@@ -16,9 +17,14 @@ function MonsterImage(props) {
           style={{
             backgroundImage: 'url(' + props.img + ')',
             backgroundSize: 'cover',
+            backgroundPosition: 'center',
           }}
         >
-          <input onChange={props.change} placeholder="Image url"></input>
+          <input
+            className="monsterImgInput"
+            onChange={props.change}
+            placeholder={props.img || 'Image URL'}
+          ></input>
         </div>
       );
     } else {
@@ -35,7 +41,6 @@ function MonsterImage(props) {
 
 function MonsterName(props) {
   function statusCheck(status) {
-    console.log('I am here');
     if (status === 'edit' || status === 'new') {
       return (
         <input
@@ -105,33 +110,63 @@ function MonsterPage(props) {
   const [monsterImage, setMonsterImage] = useState('');
   const [monsterSpecial] = useState([]);
   const [monsterSpecs] = useState({});
+  const [haveLoaded, setHaveLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [status, setStatus] = useState(props.status);
-  const [urlToFetch] = useState(`monster/${monster}`);
+  const [displayPopup, setDisplayPopup] = useState(false);
+  const [redirectPopup, setRedirectPopup] = useState(false);
+  const [textPopup, setTextPopup] = useState('no text');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setStatus(props.status);
   }, [props.status]);
 
   useEffect(() => {
+    console.log(`haveLoaded: ${haveLoaded}`);
     async function getMonster() {
       setIsLoading(true);
-      let response = await fetch(urlToFetch);
-      if (response.ok) {
-        let responseJSON = await response.json();
-        setMonsterName(responseJSON.name);
-        setMonsterDescription(responseJSON.description);
-        setMonsterImage(responseJSON.img);
+      console.log(`fetching ${`monster/${monster}`}`);
+      try {
+        let response = await fetch(`/monster/${monster}`);
+        console.log(response);
+        if (response.ok) {
+          let responseJSON = await response.json();
+          console.log(responseJSON);
+          setMonsterName(responseJSON.name);
+          setMonsterDescription(responseJSON.description);
+          setMonsterImage(responseJSON.image);
+          setIsLoading(false);
+          setIsError(false);
+          setHaveLoaded(true);
+        } else {
+          console.error('error while fetching a monster data: response is not ok');
+          setIsLoading(false);
+          setIsError(true);
+        }
+      } catch (error) {
+        console.error(`error while fecthing: ${error}`);
         setIsLoading(false);
-      } else {
-        console.error('error while fetching a monster data');
+        setIsError(true);
       }
     }
-    getMonster();
-  }, [urlToFetch]);
+    if (haveLoaded === false && status !== 'new') {
+      console.log(`getting monster`);
+      getMonster();
+    } else {
+      setIsLoading(false);
+    }
+  }, [status, monster, haveLoaded]);
 
   // FUNCTIONS
   ////////////////////////
+
+  function closePopup() {
+    setDisplayPopup(false);
+    setTextPopup('no text');
+  }
 
   function handleChangeMonsterName(e) {
     const newName = e.target.value;
@@ -144,7 +179,6 @@ function MonsterPage(props) {
   }
 
   function handleChangeMonsterImage(e) {
-    console.log('setting monster image');
     const newImg = e.target.value;
     setMonsterImage(newImg);
   }
@@ -153,7 +187,7 @@ function MonsterPage(props) {
     setStatus(newStatus);
   }
 
-  function saveMonster() {
+  async function saveMonster() {
     const monsterToSave = {
       name: monsterName,
       description: monsterDescription,
@@ -162,11 +196,21 @@ function MonsterPage(props) {
       special: [],
       specs: {},
     };
-    manipulate.saveNewMonster(monsterToSave);
-    statusChange('read');
+    // manipulate.saveNewMonster(monsterToSave);
+    const newSlug = await manipulate.saveNewMonsterServer(monsterToSave);
+    if (newSlug === 'already existing') {
+      setDisplayPopup(true);
+      setTextPopup('Monster is already existing');
+      setRedirectPopup('new');
+    } else {
+      setDisplayPopup(true);
+      setTextPopup('Saved');
+      setRedirectPopup(newSlug);
+      statusChange('read');
+    }
   }
 
-  function editMonster() {
+  async function editMonster() {
     const monsterToEdit = {
       name: monsterName,
       description: monsterDescription,
@@ -175,12 +219,14 @@ function MonsterPage(props) {
       special: [],
       specs: {},
     };
-    manipulate.editMonster(monsterToEdit, originalMonsterSlug);
+    const newSlug = await manipulate.editMonsterServer(monsterToEdit, originalMonsterSlug);
+    navigate(`/${newSlug}`);
     statusChange('read');
   }
 
-  function deleteMonster() {
-    manipulate.deleteMonster(monster);
+  async function deleteMonster() {
+    await manipulate.deleteMonsterServer(monster);
+    navigate(`/`);
   }
 
   // RENDER
@@ -188,9 +234,14 @@ function MonsterPage(props) {
 
   return (
     <div className="App">
+      {displayPopup ? (
+        <Popup closePopup={closePopup} text={textPopup} redirect={redirectPopup} />
+      ) : null}
       {isLoading ? (
-        <h2 className="loading">LOADING</h2>
-      ) : (
+        <section className="monsterSection">
+          <h2 className="loading">LOADING</h2>
+        </section>
+      ) : !isError ? (
         <section className="monsterSection">
           <MonsterImage img={monsterImage} status={status} change={handleChangeMonsterImage} />
           <MonsterName name={monsterName} status={status} change={handleChangeMonsterName} />
@@ -201,6 +252,10 @@ function MonsterPage(props) {
           />
           <MonsterSpecial special={monsterSpecial} status={status} />
           <MonsterSpecs specs={monsterSpecs} status={status} />
+        </section>
+      ) : (
+        <section className="monsterSection">
+          <h2 className="loading">ERROR</h2>
         </section>
       )}
 

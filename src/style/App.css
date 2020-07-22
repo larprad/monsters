@@ -15,16 +15,20 @@ h3 {
   font-weight: normal;
 }
 
+a {
+  text-decoration: none;
+}
+
 .App {
-  padding: 0.5em;
-  background-color: darkgrey;
+  /* padding: 0.5em; */
+  background-color: #410e03;
   grid-area: app;
   height: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
   display: grid;
-  grid-gap: 0.5em;
-  grid-template: 1fr 80% 1fr / 100%;
+  grid-gap: 0;
+  grid-template: 2fr 80% 1fr / 100%;
   grid-template-areas:
     'header'
     'monsters'
@@ -33,26 +37,78 @@ h3 {
 
 .App-header {
   grid-area: header;
-  background-color: antiquewhite;
+  background-color: #886149;
+  border-top: 5px solid #822411;
+}
+
+.App-header div {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.App-header img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 .App-monsters {
   grid-area: monsters;
-  background-color: gainsboro;
+  background-color: #270902;
   overflow-y: scroll;
 }
 
 .monsterTuile {
   box-sizing: border-box;
-  height: 5em;
-  background-color: honeydew;
+  height: 7em;
+  background-color: rgb(172, 153, 153);
   margin: 0.5em;
+  cursor: pointer;
 }
 
 .monsterTuile img {
-  width: 4.5em;
-  height: 4.5em;
-  border-radius: 50%;
-  margin: 0 1em;
+  width: 8em;
+  height: 100%;
+  border-top-right-radius: 0.5em;
+
+  margin-right: 1em;
   object-fit: cover;
+}
+
+.tuileText {
+  color: rgb(44, 44, 44);
+  flex-grow: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+.tuileText h3 {
+  font-weight: bold;
+  padding-top: 0.4em;
+  height: 40%;
+}
+
+.tuileText p {
+  height: 60%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0.4em;
+  padding-left: 0;
+}
+
+.tuileSideContainer {
+  width: 3em;
+  flex-shrink: 0;
+  height: 100%;
+  background-color: #95735f52;
+}
+
+.tuileSideContainer img {
+  cursor: pointer;
+  width: 1.5em;
+  height: 1.5em;
+  opacity: 40%;
+  margin: 0;
 }

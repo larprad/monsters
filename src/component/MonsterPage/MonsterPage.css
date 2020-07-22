@@ -1,44 +1,79 @@
 .monsterSection {
   grid-area: 1 / 1 / span 2 / 1;
   display: grid;
-  grid-template: 40% 1fr 2fr 2fr / 1fr 1fr;
+  grid-template: 50% 0.7fr 2fr 1.3fr / 1fr 1fr;
   grid-template-areas:
     'monsterImg monsterImg'
     'monsterTitle monsterTitle'
     'monsterDescription monsterDescription'
     'monsterSpecial monsterSpecs';
-  grid-gap: 0.5em;
-  background-color: indianred;
+  background-color: #410e03;
+}
+
+.monsterSection input,
+.monsterSection textarea {
+  font-family: inherit;
+  text-align: center;
+  vertical-align: center;
 }
 
 .monsterImg {
   grid-area: monsterImg;
+  margin: 0.5em;
+  margin-bottom: 0;
+  border-top-left-radius: 2em;
+  border-top-right-radius: 2em;
+}
+
+.monsterImgInput {
+  font-family: inherit;
+  font-size: 1.2em;
+  align-items: flex-end;
+  margin: 0.5em;
+  margin-top: 7em;
+  height: 2em;
+  width: 100%;
+  border-radius: 0.2em;
+  opacity: 0.7;
 }
 
 .monsterImg img {
   object-fit: cover;
   height: 100%;
   width: 100%;
+  border-top-left-radius: 2em;
+  border-top-right-radius: 2em;
 }
 
 .monsterTitle {
   grid-area: monsterTitle;
-  background-color: burlywood;
+  background-color: #270902;
+  border-top: 7px solid #000000b0;
+  font-weight: lighter;
+  font-size: 2em;
+  padding-bottom: 0.3em;
+  color: #a74229;
 }
 
 .monsterDescription {
+  font-size: 1.2em;
   grid-area: monsterDescription;
-  background-color: burlywood;
+  background-color: #410f04;
+  color: #a74229be;
+  padding: 1em 1em;
+  overflow-y: scroll;
+  line-height: 1.3em;
 }
 
 .monsterSpecial {
   grid-area: monsterSpecial;
-  background-color: burlywood;
+  background-color: rgb(0, 0, 0);
+  border-right: 1px solid rgb(105, 105, 105);
 }
 
 .monsterSpecs {
   grid-area: monsterSpecs;
-  background-color: burlywood;
+  background-color: rgb(0, 0, 0);
 }
 
 .loading {

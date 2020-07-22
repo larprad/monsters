@@ -19,6 +19,10 @@
   justify-content: flex-start;
 }
 
+.stretch {
+  align-items: stretch;
+}
+
 .containerFull {
   width: 100%;
   height: 100%;

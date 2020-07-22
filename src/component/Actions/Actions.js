@@ -8,9 +8,9 @@ function Save(props) {
   }
   // const { monster } = useParams();
   return (
-    <Link to={`/${props.monsterSlug}`}>
-      <button onClick={handleSaveClick}>Save</button>
-    </Link>
+    <button className="actionButton" onClick={handleSaveClick}>
+      Save
+    </button>
   );
 }
 
@@ -20,7 +20,9 @@ function Delete(props) {
   }
   return (
     <Link to="/">
-      <button onClick={handleDeleteClick}>Delete</button>
+      <button className="actionButton" onClick={handleDeleteClick}>
+        Delete
+      </button>
     </Link>
   );
 }
@@ -32,7 +34,9 @@ function Edit(props) {
   const { monster } = useParams();
   return (
     <Link to={`/${monster}/edit`}>
-      <button onClick={handleStatusChange}>Edit</button>
+      <button className="actionButton" onClick={handleStatusChange}>
+        Edit
+      </button>
     </Link>
   );
 }
@@ -40,7 +44,7 @@ function Edit(props) {
 function Back() {
   return (
     <Link to="/">
-      <button>back</button>
+      <button className="actionButton">Back</button>
     </Link>
   );
 }
@@ -48,7 +52,7 @@ function Back() {
 function New() {
   return (
     <Link to={'/new'}>
-      <button>New</button>
+      <button className="actionButton">New</button>
     </Link>
   );
 }
@@ -60,22 +64,15 @@ function Cancel(props) {
   const { monster } = useParams();
   return (
     <Link to={`/${monster}`}>
-      <button onClick={handleStatusChange}>Cancel</button>
+      <button className="actionButton" onClick={handleStatusChange}>
+        Cancel
+      </button>
     </Link>
   );
 }
 
 function Filter() {
-  return <button>Filter</button>;
-}
-
-function Fetch() {
-  async function fecthData() {
-    let response = await fetch('/allMonsters');
-    let responseJSON = await response.json();
-    console.log(responseJSON);
-  }
-  return <button onClick={fecthData}>Fetch</button>;
+  return <button className="actionButton">Filter</button>;
 }
 
 function Actions(props) {
@@ -83,7 +80,7 @@ function Actions(props) {
     switch (context) {
       case 'read':
         return (
-          <div className="containerFull flexCenter spaceEvenly">
+          <div className="containerFull flexCenter spaceEvenly stretch">
             <Back />
             <Edit statusChange={props.statusChange} />
             <Delete delete={props.delete} />
@@ -91,29 +88,28 @@ function Actions(props) {
         );
       case 'edit':
         return (
-          <div className="containerFull flexCenter spaceEvenly">
+          <div className="containerFull flexCenter spaceEvenly stretch">
             <Cancel statusChange={props.statusChange} />
             <Save save={props.edit} monsterSlug={props.monsterSlug} />
           </div>
         );
       case 'new':
         return (
-          <div className="containerFull flexCenter spaceEvenly">
+          <div className="containerFull flexCenter spaceEvenly stretch">
             <Back />
             <Save save={props.save} monsterSlug={props.monsterSlug} />
           </div>
         );
       case 'home':
         return (
-          <div className="containerFull flexCenter spaceEvenly">
+          <div className="containerFull flexCenter spaceEvenly stretch">
             <Filter />
             <New />
-            <Fetch />
           </div>
         );
       default:
         return (
-          <div className="containerFull flexCenter spaceEvenly">
+          <div className="containerFull flexCenter spaceEvenly stretch">
             <Back />
           </div>
         );
@@ -122,4 +118,4 @@ function Actions(props) {
   return <div className="App-actions">{actionsAvailable(props.status)}</div>;
 }
 
-export default Actions;
+export { Actions, Delete, Edit };
