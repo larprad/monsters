@@ -13,7 +13,7 @@ function MonsterImage(props) {
     if (status === 'edit' || status === 'new') {
       return (
         <div
-          className="monsterImg flexCenter"
+          className="monsterImg flexCenter edit"
           style={{
             backgroundImage: 'url(' + props.img + ')',
             backgroundSize: 'cover',
@@ -44,7 +44,7 @@ function MonsterName(props) {
     if (status === 'edit' || status === 'new') {
       return (
         <input
-          className="monsterTitle flexCenter"
+          className="monsterTitle flexCenter edit"
           placeholder="Monster name"
           value={props.name}
           onChange={props.change}
@@ -62,7 +62,7 @@ function MonsterDescription(props) {
     if (status === 'edit' || status === 'new') {
       return (
         <textarea
-          className="monsterDescription flexCenter"
+          className="monsterDescription flexCenter edit"
           placeholder="Description"
           value={props.description}
           onChange={props.change}
@@ -219,6 +219,10 @@ function MonsterPage(props) {
       special: [],
       specs: {},
     };
+    console.log(`original monster slug: ${originalMonsterSlug}`);
+    console.log(`actual monster name: ${monsterName}`);
+    console.log(`monster content:`);
+    console.log(monsterToEdit);
     const newSlug = await manipulate.editMonsterServer(monsterToEdit, originalMonsterSlug);
     navigate(`/${newSlug}`);
     statusChange('read');

@@ -1,5 +1,6 @@
 const manipulate = {
   async saveNewMonsterServer(monsterData) {
+    // ERROR HANDLING TO DO !!
     try {
       console.log('start saving');
       const response = await fetch('/monster', {
@@ -22,6 +23,8 @@ const manipulate = {
         console.log(content);
         if (content === 'already existing') {
           return content;
+        } else {
+          throw new Error('not saved');
         }
       }
     } catch (error) {
@@ -53,6 +56,8 @@ const manipulate = {
   async editMonsterServer(monsterData, nameOfEditedMonster) {
     try {
       console.log('start editing');
+      console.log('request: /monster/' + nameOfEditedMonster);
+      console.log(monsterData);
       const response = await fetch('/monster/' + nameOfEditedMonster, {
         method: 'PUT',
         headers: {
