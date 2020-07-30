@@ -196,16 +196,15 @@ function MonsterPage(props) {
       special: [],
       specs: {},
     };
-    // manipulate.saveNewMonster(monsterToSave);
+    console.log('monster to save:');
+    console.log(monsterToSave);
     const newSlug = await manipulate.saveNewMonsterServer(monsterToSave);
     if (newSlug === 'already existing') {
       setDisplayPopup(true);
       setTextPopup('Monster is already existing');
       setRedirectPopup('new');
     } else {
-      setDisplayPopup(true);
-      setTextPopup('Saved');
-      setRedirectPopup(newSlug);
+      navigate('/' + newSlug);
       statusChange('read');
     }
   }

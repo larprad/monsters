@@ -80,8 +80,6 @@ api.put('/monster/:slug', function (req, res, next) {
     }
   );
   res.status(201).json('monster have been received');
-  delete monsters[param.name];
-  monsters[monster.slug] = monster;
 });
 
 // DELETE

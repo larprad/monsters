@@ -44,7 +44,7 @@ function Edit(props) {
 function Back() {
   return (
     <Link to="/">
-      <button className="actionButton">Back</button>
+      <button className="actionButton">Home</button>
     </Link>
   );
 }

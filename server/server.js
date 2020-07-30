@@ -14,16 +14,17 @@ db.run(
     if (err) {
       throw err;
     } else {
-      console.log('table is created');
+      console.log('Database is ready');
     }
   }
 );
 
-app.use('/', api);
-
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(morgan('dev'));
+
+app.use('/', api);
+
 app.use(errorHandler);
 
 app.listen(8080, () => console.log(`Little server is listening`));

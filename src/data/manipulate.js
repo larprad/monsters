@@ -13,19 +13,11 @@ const manipulate = {
       });
       if (response.ok) {
         console.log('save response is ok');
-        const content = await response.json();
-        console.log('content response is');
-        console.log(content);
       } else {
         console.log(`error while saving data`);
         const content = await response.json();
-        console.log('content response is');
-        console.log(content);
-        if (content === 'already existing') {
-          return content;
-        } else {
-          throw new Error('not saved');
-        }
+        console.log('content response is:' + content);
+        return content;
       }
     } catch (error) {
       console.log(`error while saving data: ${error}`);
@@ -56,8 +48,6 @@ const manipulate = {
   async editMonsterServer(monsterData, nameOfEditedMonster) {
     try {
       console.log('start editing');
-      console.log('request: /monster/' + nameOfEditedMonster);
-      console.log(monsterData);
       const response = await fetch('/monster/' + nameOfEditedMonster, {
         method: 'PUT',
         headers: {
@@ -68,9 +58,6 @@ const manipulate = {
       });
       if (response.ok) {
         console.log('edit response is ok');
-        const content = await response.json();
-        console.log('content response is');
-        console.log(content);
       } else {
         console.log(`error while editing data`);
       }

@@ -15,6 +15,7 @@
   font-family: inherit;
   text-align: center;
   vertical-align: center;
+  resize: none;
 }
 
 .monsterImg {
