@@ -79,31 +79,120 @@ function MonsterTuile(props) {
   }
 }
 
+function FilterPanel(props) {
+  function handleSliderChange(e) {
+    props.setMonsterNumber(e.target.value);
+  }
+
+  function handleRadioChange(e) {
+    props.setMonsterOrder(e.target.value);
+  }
+
+  function handleCrossClick() {
+    props.setFilterPanelDisplay(false);
+  }
+
+  return (
+    <div className="filterPanel flexCenter column spaceEvenly">
+      <svg
+        className="closeCross"
+        viewBox="0 0 15 15"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        width="15"
+        height="15"
+        onClick={handleCrossClick}
+      >
+        <path d="M1.5 1.5l12 12m-12 0l12-12" stroke="currentColor"></path>
+      </svg>
+      <h1>filter & Order</h1>
+      <div className="slidecontainer flexCenter spaceEvenly">
+        <input
+          type="range"
+          min="1"
+          max="20"
+          defaultValue={props.monsterNumber}
+          className="slider"
+          id="myRange"
+          onMouseUp={handleSliderChange}
+          onTouchEnd={handleSliderChange}
+        />
+        <h3>Max Monsters displayed: {props.monsterNumber}</h3>
+        <h3>Monsters in Database: {props.monsterCount}</h3>
+      </div>
+      <div>
+        <label htmlFor="order">Order by last created</label>
+        <input
+          type="radio"
+          id="order"
+          name="order"
+          value="lastcreated"
+          onChange={handleRadioChange}
+          checked={props.monsterOrder === 'lastcreated' ? true : false}
+        />
+      </div>
+      <div>
+        <label htmlFor="order">Order by first created</label>
+        <input
+          type="radio"
+          id="order"
+          name="order"
+          value="firstcreated"
+          onChange={handleRadioChange}
+          checked={props.monsterOrder === 'firstcreated' ? true : false}
+        />
+      </div>
+    </div>
+  );
+}
+
 function Home() {
   const [monsterData, setMonsterData] = useState({});
   const [haveUpdated, setHaveUpdated] = useState(false);
+  const [filterPanelDisplay, setFilterPanelDisplay] = useState(false);
+  const [monsterNumber, setMonsterNumber] = useState(10);
+  const [monsterOrder, setMonsterOrder] = useState('firstcreated');
+  const [monsterCount, setMonsterCount] = useState(0);
+
+  function toggleFilerPanel() {
+    setFilterPanelDisplay(!filterPanelDisplay);
+  }
 
   useEffect(() => {
     console.log(`have updated: ${haveUpdated}`);
-    async function getAllMonsters() {
-      console.log('getting all the monsters');
-      let response = await fetch('/allMonsters');
-      if (response.ok) {
-        let responseJSON = await response.json();
-        setMonsterData(responseJSON);
-      } else {
-        console.error('error fetching monster data');
-      }
+    async function request() {
+      const allMonsters = await manipulate.getAllMonsters(monsterNumber, monsterOrder);
+      setMonsterData(allMonsters);
     }
-    getAllMonsters();
+    request();
     setHaveUpdated(false);
-  }, [haveUpdated]);
+  }, [haveUpdated, monsterNumber, monsterOrder]);
+
+  useEffect(() => {
+    async function getMonsterCount() {
+      const count = await fetch('/monstersCount');
+      const countResponse = await count.json();
+      console.log(countResponse);
+      setMonsterCount(countResponse['count (*)']);
+    }
+    getMonsterCount();
+  }, []);
 
   return (
     <div className="App">
       <Header />
       <MonsterStore monsters={monsterData} setHaveUpdated={setHaveUpdated} />
-      <Actions status="home" />
+      {filterPanelDisplay ? (
+        <FilterPanel
+          setMonsterNumber={setMonsterNumber}
+          setMonsterOrder={setMonsterOrder}
+          monsterNumber={monsterNumber}
+          monsterOrder={monsterOrder}
+          monsterCount={monsterCount}
+          setFilterPanelDisplay={setFilterPanelDisplay}
+        />
+      ) : null}
+      <Actions status="home" toggleFilerPanel={toggleFilerPanel} />
     </div>
   );
 }

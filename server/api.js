@@ -7,9 +7,28 @@ const db = new sqlite3.Database('server/monsterDb.sqlite');
 
 // GET
 
-api.get('/allMonsters', function (req, res) {
-  db.all('select * from monsters', (err, monsters) => {
-    res.status(200).json(monsters);
+api.get('/monstersCount', function (req, res) {
+  db.get('select count (*) from monsters', (err, count) => {
+    if (err) {
+      throw err;
+    } else {
+      res.status(200).json(count);
+    }
+  });
+});
+
+api.get('/allMonsters/:number/:order', function (req, res) {
+  const numbers = req.params.number;
+  const rawOrder = req.params.order;
+  const monsterorder = rawOrder === 'firstcreated' ? 'asc' : 'desc';
+  const request = `select * from monsters order by createdate ${monsterorder} limit ${numbers}`;
+  console.log(request);
+  db.all(request, (err, monsters) => {
+    if (err) {
+      throw err;
+    } else {
+      res.status(200).json(monsters);
+    }
   });
 });
 
@@ -32,13 +51,23 @@ api.get('*', (req, res) => {
 
 api.post('/monster', function (req, res, next) {
   const monster = req.body;
+  const date = new Date();
+  const formatedDate =
+    date.getFullYear().toString() +
+    ('0' + (date.getMonth() + 1)).slice(-2).toString() +
+    ('0' + date.getDate()).slice(-2).toString() +
+    date.getHours().toString() +
+    date.getMinutes().toString() +
+    date.getSeconds().toString();
+  console.log(formatedDate);
   db.run(
-    'insert into monsters (name, slug, description, image) values ($name, $slug, $description, $image)',
+    'insert into monsters (name, slug, description, image, createdate) values ($name, $slug, $description, $image, $date)',
     {
       $name: monster.name,
       $slug: monster.slug,
       $description: monster.description,
       $image: monster.img,
+      $date: date,
     },
     (err, row) => {
       if (err) {

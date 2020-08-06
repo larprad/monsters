@@ -20,6 +20,7 @@ a {
 }
 
 .App {
+  position: relative;
   /* padding: 0.5em; */
   background-color: #410e03;
   grid-area: app;
@@ -111,4 +112,36 @@ a {
   height: 1.5em;
   opacity: 40%;
   margin: 0;
+}
+
+.filterPanel {
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  right: 0;
+  height: 300px;
+  max-width: 600px;
+  min-width: 300px;
+  width: 80%;
+  background-color: #7d230b;
+  color: White;
+  opacity: 95%;
+  margin: 0 auto;
+}
+
+.slidecontainer {
+  width: 100%;
+  padding: 1em;
+}
+
+.slider {
+  width: 60%;
+  margin: 0 1em;
+}
+
+.closeCross {
+  position: absolute;
+  cursor: pointer;
+  top: 1em;
+  right: 1em;
 }

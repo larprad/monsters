@@ -71,8 +71,12 @@ function Cancel(props) {
   );
 }
 
-function Filter() {
-  return <button className="actionButton">Filter</button>;
+function Filter(props) {
+  return (
+    <button className="actionButton" onClick={props.toggleFilerPanel}>
+      Filter
+    </button>
+  );
 }
 
 function Actions(props) {
@@ -103,7 +107,7 @@ function Actions(props) {
       case 'home':
         return (
           <div className="containerFull flexCenter spaceEvenly stretch">
-            <Filter />
+            <Filter toggleFilerPanel={props.toggleFilerPanel} />
             <New />
           </div>
         );

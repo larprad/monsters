@@ -9,7 +9,7 @@ const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('server/monsterDb.sqlite');
 
 db.run(
-  'create table if not exists monsters (id integer primary key, name text unique not null, slug text unique not null, description text, image text)',
+  'create table if not exists monsters (id integer primary key, name text unique not null, slug text unique not null, description text, image text, date text)',
   (err) => {
     if (err) {
       throw err;

@@ -66,6 +66,22 @@ const manipulate = {
     }
     return monsterData.slug;
   },
+
+  async getAllMonsters(monsterNumber, monsterOrder) {
+    const request = '/allMonsters/' + monsterNumber + '/' + monsterOrder;
+    console.log('getting all the monsters: ' + request);
+    try {
+      let response = await fetch(request);
+      if (response.ok) {
+        let responseJSON = await response.json();
+        return responseJSON;
+      } else {
+        console.error('error fetching monster data');
+      }
+    } catch (error) {
+      console.log('error while getting all monsters');
+    }
+  },
 };
 
 export default manipulate;
