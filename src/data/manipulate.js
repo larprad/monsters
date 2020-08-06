@@ -1,5 +1,6 @@
 const manipulate = {
   async saveNewMonsterServer(monsterData) {
+    // ERROR HANDLING TO DO !!
     try {
       console.log('start saving');
       const response = await fetch('/monster', {
@@ -12,17 +13,11 @@ const manipulate = {
       });
       if (response.ok) {
         console.log('save response is ok');
-        const content = await response.json();
-        console.log('content response is');
-        console.log(content);
       } else {
         console.log(`error while saving data`);
         const content = await response.json();
-        console.log('content response is');
-        console.log(content);
-        if (content === 'already existing') {
-          return content;
-        }
+        console.log('content response is:' + content);
+        return content;
       }
     } catch (error) {
       console.log(`error while saving data: ${error}`);
@@ -63,9 +58,6 @@ const manipulate = {
       });
       if (response.ok) {
         console.log('edit response is ok');
-        const content = await response.json();
-        console.log('content response is');
-        console.log(content);
       } else {
         console.log(`error while editing data`);
       }
@@ -73,6 +65,22 @@ const manipulate = {
       console.log(`error while editing data: ${error}`);
     }
     return monsterData.slug;
+  },
+
+  async getAllMonsters(monsterNumber, monsterOrder) {
+    const request = '/allMonsters/' + monsterNumber + '/' + monsterOrder;
+    console.log('getting all the monsters: ' + request);
+    try {
+      let response = await fetch(request);
+      if (response.ok) {
+        let responseJSON = await response.json();
+        return responseJSON;
+      } else {
+        console.error('error fetching monster data');
+      }
+    } catch (error) {
+      console.log('error while getting all monsters');
+    }
   },
 };
 
