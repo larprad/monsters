@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react
 
 function Header() {
   return (
-    <header className='App-header flexCenter'>
+    <header className="App-header flexCenter">
       <h1>Monsters</h1>
     </header>
   );
@@ -24,10 +24,14 @@ function Header() {
 function MonsterStore(props) {
   const monsterData = props.monsters;
   return (
-    <div className='App-monsters'>
+    <div className="App-monsters">
       {monsterData
         ? Object.entries(monsterData).map(([monsterName, monsterData]) => (
-            <MonsterTuile key={monsterData.slug} monster={monsterData} setHaveUpdated={props.setHaveUpdated} />
+            <MonsterTuile
+              key={monsterData.slug}
+              monster={monsterData}
+              setHaveUpdated={props.setHaveUpdated}
+            />
           ))
         : null}
     </div>
@@ -51,23 +55,23 @@ function MonsterTuile(props) {
       navigate(`/${slug}/edit`);
     }
     return (
-      <div className='monsterTuile flexCenter spaceStart'>
-        <div className='imgTileContainer'>
+      <div className="monsterTuile flexCenter spaceStart">
+        <div className="imgTileContainer">
           <img onClick={redirect} src={image || placeholder} alt={name} />
         </div>
-        <div className='tuileText'>
+        <div className="tuileText">
           <h3 onClick={redirect}>{name}</h3>
           <p onClick={redirect}>{description}</p>
-          <div className='tuileSideContainer flexCenter spaceBetween'>
+          <div className="tuileSideContainer flexCenter spaceBetween">
             {/* <img src='/icons/delete.svg' onClick={deleteMonster} alt='delete' /> */}
-            <img src='/icons/create.svg' onClick={editMonster} alt='edit' />
+            <img src="/icons/create.svg" onClick={editMonster} alt="edit" />
           </div>
         </div>
       </div>
     );
   } else {
     return (
-      <div className='monsterTuile flexCenter spaceStart'>
+      <div className="monsterTuile flexCenter spaceStart">
         <h2>Not Found</h2>
       </div>
     );
@@ -88,54 +92,55 @@ function FilterPanel(props) {
   }
 
   return (
-    <div className='filterPanel flexCenter column spaceEvenly'>
+    <div className="filterPanel flexCenter column spaceEvenly">
       <svg
-        className='closeCross'
-        viewBox='0 0 15 15'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-        width='15'
-        height='15'
+        className="closeCross"
+        viewBox="0 0 15 15"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        width="15"
+        height="15"
         onClick={handleCrossClick}
       >
-        <path d='M1.5 1.5l12 12m-12 0l12-12' stroke='currentColor'></path>
+        <path d="M1.5 1.5l12 12m-12 0l12-12" stroke="currentColor"></path>
       </svg>
       <h2>filter & Order</h2>
       <div>
         <h3>
-          Monsters displayed: <span className='filterNumber'>{props.monsterNumber}</span> / {props.monsterCount}
+          Monsters displayed: <span className="filterNumber">{props.monsterNumber}</span> /{' '}
+          {props.monsterCount}
         </h3>
       </div>
-      <div className='slidecontainer flexCenter spaceEvenly'>
+      <div className="slidecontainer flexCenter spaceEvenly">
         <input
-          type='range'
-          min='1'
+          type="range"
+          min="1"
           max={props.monsterCount}
           defaultValue={props.monsterNumber}
-          className='slider'
-          id='myRange'
+          className="slider"
+          id="myRange"
           onMouseUp={handleSliderChange}
           onTouchEnd={handleSliderChange}
         />
       </div>
       <div>
-        <label htmlFor='order'>Order by last created</label>
+        <label htmlFor="order">Order by last created</label>
         <input
-          type='radio'
-          id='order'
-          name='order'
-          value='lastcreated'
+          type="radio"
+          id="order"
+          name="order"
+          value="lastcreated"
           onChange={handleRadioChange}
           checked={props.monsterOrder === 'lastcreated' ? true : false}
         />
       </div>
       <div>
-        <label htmlFor='order'>Order by first created</label>
+        <label htmlFor="order">Order by first created</label>
         <input
-          type='radio'
-          id='order'
-          name='order'
-          value='firstcreated'
+          type="radio"
+          id="order"
+          name="order"
+          value="firstcreated"
           onChange={handleRadioChange}
           checked={props.monsterOrder === 'firstcreated' ? true : false}
         />
@@ -149,6 +154,7 @@ function Home() {
   const [haveUpdated, setHaveUpdated] = useState(false);
   const [filterPanelDisplay, setFilterPanelDisplay] = useState(false);
   const [monsterNumber, setMonsterNumber] = useState(5);
+
   const [monsterOrder, setMonsterOrder] = useState('firstcreated');
   const [monsterCount, setMonsterCount] = useState(0);
 
@@ -177,7 +183,7 @@ function Home() {
   }, []);
 
   return (
-    <div className='App'>
+    <div className="App">
       <Header />
       <MonsterStore monsters={monsterData} setHaveUpdated={setHaveUpdated} />
       {filterPanelDisplay ? (
@@ -190,16 +196,16 @@ function Home() {
           setFilterPanelDisplay={setFilterPanelDisplay}
         />
       ) : null}
-      <Actions status='home' toggleFilerPanel={toggleFilerPanel} />
+      <Actions status="home" toggleFilerPanel={toggleFilerPanel} />
     </div>
   );
 }
 
 function NotFound() {
   return (
-    <div className='App flexCenter'>
+    <div className="App flexCenter">
       <h1>Not Found</h1>
-      <Link to='/'>
+      <Link to="/">
         <button>Home</button>
       </Link>
     </div>
@@ -210,11 +216,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home status='home' />}></Route>
-        <Route exact path=':monster' element={<MonsterPage status='read' />}></Route>
-        <Route path=':monster/edit' element={<MonsterPage status='edit' />} />
-        <Route path='/new' element={<MonsterPage status='new' />} />
-        <Route path='*' element={<NotFound />}></Route>
+        <Route path="/" element={<Home status="home" />}></Route>
+        <Route exact path=":monster" element={<MonsterPage status="read" />}></Route>
+        <Route path=":monster/edit" element={<MonsterPage status="edit" />} />
+        <Route path="/new" element={<MonsterPage status="new" />} />
+        <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </Router>
   );

@@ -2,7 +2,7 @@
   position: relative;
   grid-area: 1 / 1 / span 2 / 1;
   display: grid;
-  grid-template: 70%  1fr / 1fr;
+  grid-template: 70% 1fr / 1fr;
   grid-template-areas:
     'monsterImg monsterImg'
     'monsterDescription monsterDescription';
@@ -17,7 +17,7 @@
   border: none;
   outline: none;
   background-color: var(--Edit-main);
-  background-image: url("edit.png") ;
+  background-image: url('edit.png');
 }
 
 .monsterImg {
@@ -53,11 +53,11 @@
   width: 100%;
   padding: 0.3em;
   text-align: center;
-  Top: 55%;
+  top: 55%;
   background-color: var(--BG-tri);
   font-size: 2em;
   font-weight: lighter;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 .monsterDescription {
@@ -69,7 +69,7 @@
   line-height: 1.3em;
   margin: 15px;
   margin-bottom: 0;
-  margin-top:-1.5em;
+  margin-top: -1.5em;
   border-radius: 1em;
 }
 

@@ -13,19 +13,23 @@ function MonsterImage(props) {
     if (status === 'edit' || status === 'new') {
       return (
         <div
-          className='monsterImg flexCenter edit'
+          className="monsterImg flexCenter edit"
           style={{
             backgroundImage: 'url(' + props.img + ')',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         >
-          <input className='monsterImgInput' onChange={props.change} placeholder={props.img || 'Image URL'}></input>
+          <input
+            className="monsterImgInput"
+            onChange={props.change}
+            placeholder={props.img || 'Image URL'}
+          ></input>
         </div>
       );
     } else {
       return (
-        <div className='monsterImg'>
+        <div className="monsterImg">
           <img src={props.img} alt={props.name}></img>
         </div>
       );
@@ -40,14 +44,14 @@ function MonsterName(props) {
     if (status === 'edit' || status === 'new') {
       return (
         <input
-          className='monsterTitle flexCenter'
-          placeholder='Monster name'
+          className="monsterTitle flexCenter"
+          placeholder="Monster name"
           value={props.name}
           onChange={props.change}
         ></input>
       );
     } else {
-      return <h2 className='monsterTitle flexCenter'>{props.name}</h2>;
+      return <h2 className="monsterTitle flexCenter">{props.name}</h2>;
     }
   }
   return statusCheck(props.status);
@@ -58,14 +62,14 @@ function MonsterDescription(props) {
     if (status === 'edit' || status === 'new') {
       return (
         <textarea
-          className='monsterDescription flexCenter'
-          placeholder='Description'
+          className="monsterDescription flexCenter"
+          placeholder="Description"
           value={props.description}
           onChange={props.change}
         ></textarea>
       );
     } else {
-      return <p className='monsterDescription flexCenter'>{props.description}</p>;
+      return <p className="monsterDescription flexCenter">{props.description}</p>;
     }
   }
   return statusCheck(props.status);
@@ -206,14 +210,16 @@ function MonsterPage(props) {
   ////////////////////////
 
   return (
-    <div className='App'>
-      {displayPopup ? <Popup closePopup={closePopup} text={textPopup} redirect={redirectPopup} /> : null}
+    <div className="App">
+      {displayPopup ? (
+        <Popup closePopup={closePopup} text={textPopup} redirect={redirectPopup} />
+      ) : null}
       {isLoading ? (
-        <section className='monsterSection'>
-          <h2 className='loading'>LOADING</h2>
+        <section className="monsterSection">
+          <h2 className="loading">LOADING</h2>
         </section>
       ) : !isError ? (
-        <section className='monsterSection'>
+        <section className="monsterSection">
           <MonsterImage img={monsterImage} status={status} change={handleChangeMonsterImage} />
           <MonsterName name={monsterName} status={status} change={handleChangeMonsterName} />
           <MonsterDescription
@@ -223,8 +229,8 @@ function MonsterPage(props) {
           />
         </section>
       ) : (
-        <section className='monsterSection'>
-          <h2 className='loading'>ERROR</h2>
+        <section className="monsterSection">
+          <h2 className="loading">ERROR</h2>
         </section>
       )}
 

@@ -1,7 +1,6 @@
 .App-actions {
   grid-area: actions;
   background-color: var(--BG-main);
-
 }
 
 .App-actions a {
@@ -20,5 +19,6 @@
   background-color: var(--Font);
   font-size: 1.2em;
   color: var(--BG-tri);
+
   cursor: pointer;
 }
