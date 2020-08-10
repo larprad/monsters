@@ -1,25 +1,28 @@
 .monsterSection {
+  position: relative;
   grid-area: 1 / 1 / span 2 / 1;
   display: grid;
-  grid-template: 50% 0.7fr 2fr 1.3fr / 1fr 1fr;
+  grid-template: 70%  1fr / 1fr;
   grid-template-areas:
     'monsterImg monsterImg'
-    'monsterTitle monsterTitle'
-    'monsterDescription monsterDescription'
-    'monsterSpecial monsterSpecs';
-  background-color: #410e03;
+    'monsterDescription monsterDescription';
+  background-color: var(--BG-main);
 }
 
 .monsterSection input,
 .monsterSection textarea {
   font-family: inherit;
   text-align: center;
-  vertical-align: center;
+  resize: none;
+  border: none;
+  outline: none;
+  background-color: var(--Edit-main);
+  background-image: url("edit.png") ;
 }
 
 .monsterImg {
   grid-area: monsterImg;
-  margin: 0.5em;
+  margin: 15px;
   margin-bottom: 0;
   border-top-left-radius: 2em;
   border-top-right-radius: 2em;
@@ -46,23 +49,28 @@
 }
 
 .monsterTitle {
-  grid-area: monsterTitle;
-  background-color: #270902;
-  border-top: 7px solid #000000b0;
-  font-weight: lighter;
+  position: absolute;
+  width: 100%;
+  padding: 0.3em;
+  text-align: center;
+  Top: 55%;
+  background-color: var(--BG-tri);
   font-size: 2em;
-  padding-bottom: 0.3em;
-  color: #a74229;
+  font-weight: lighter;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 .monsterDescription {
   font-size: 1.2em;
   grid-area: monsterDescription;
-  background-color: #410f04;
-  color: #a74229be;
+  background-color: var(--BG-tri);
   padding: 1em 1em;
   overflow-y: scroll;
   line-height: 1.3em;
+  margin: 15px;
+  margin-bottom: 0;
+  margin-top:-1.5em;
+  border-radius: 1em;
 }
 
 .monsterSpecial {
@@ -82,4 +90,8 @@
   padding: 40px;
   vertical-align: center;
   text-align: center;
+}
+
+.edit {
+  background-color: var(--Edit-main);
 }

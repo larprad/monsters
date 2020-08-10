@@ -1,7 +1,7 @@
 @import './helper.css';
 
 h1 {
-  font-size: 1.5em;
+  font-size: 4.5em;
   font-weight: bold;
 }
 
@@ -20,15 +20,15 @@ a {
 }
 
 .App {
+  position: relative;
   /* padding: 0.5em; */
-  background-color: #410e03;
   grid-area: app;
   height: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
   display: grid;
   grid-gap: 0;
-  grid-template: 2fr 80% 1fr / 100%;
+  grid-template: 1.3fr 80% 1fr / 100%;
   grid-template-areas:
     'header'
     'monsters'
@@ -37,8 +37,8 @@ a {
 
 .App-header {
   grid-area: header;
-  background-color: #886149;
-  border-top: 5px solid #822411;
+  background-color: var(--BG-sec);
+  border-bottom: 1px solid var(--Font);
 }
 
 .App-header div {
@@ -47,68 +47,136 @@ a {
   width: 100%;
 }
 
-.App-header img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
+
 
 .App-monsters {
   grid-area: monsters;
-  background-color: #270902;
   overflow-y: scroll;
+  border-bottom: 1px solid var(--BG-tri);
 }
 
 .monsterTuile {
   box-sizing: border-box;
-  height: 7em;
-  background-color: rgb(172, 153, 153);
-  margin: 0.5em;
+  height: 8em;
+  background-color:var(--BG-tri);
+  margin: 1em 0.5em;
   cursor: pointer;
+  border-radius: 1em;
+}
+
+.imgTileContainer {
+  width: 45%;
+  height: 100%;
+  flex-shrink: 0;
+  border-bottom-right-radius: 1em;
 }
 
 .monsterTuile img {
-  width: 8em;
+  width: 100%;
   height: 100%;
-  border-top-right-radius: 0.5em;
-
-  margin-right: 1em;
+  border-bottom-right-radius: 1em;
   object-fit: cover;
 }
 
 .tuileText {
-  color: rgb(44, 44, 44);
+  position: relative;
   flex-grow: 1;
   height: 100%;
   overflow: hidden;
 }
 
 .tuileText h3 {
+  background-color: var(--Font);
+  color: var(--BG-tri);
   font-weight: bold;
-  padding-top: 0.4em;
-  height: 40%;
+  padding: 0.4em;
 }
 
 .tuileText p {
-  height: 60%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  margin-top: 1em;
   padding: 0.4em;
-  padding-left: 0;
 }
 
 .tuileSideContainer {
-  width: 3em;
+  width: 100%;
   flex-shrink: 0;
-  height: 100%;
-  background-color: #95735f52;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.5em;
 }
 
 .tuileSideContainer img {
   cursor: pointer;
   width: 1.5em;
   height: 1.5em;
-  opacity: 40%;
-  margin: 0;
+  opacity: 30%;
+}
+
+.filterPanel {
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  right: 0;
+  height: 300px;
+  max-width: 600px;
+  min-width: 300px;
+  border-radius: 1em;
+  width: 80%;
+  background-color: var(--BG-main);
+  color: var(--Font);
+  opacity: 95%;
+  margin: 0 auto;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.filterPanel h2 {
+  color: var(--BG-tri);
+  font-size: 2em;
+  font-weight: lighter;
+}
+
+.filterPanel label {
+  margin-right: 1em;
+}
+
+.filterNumber {
+  font-size: 1.5em;
+  color: var(--BG-tri)
+}
+
+.slidecontainer {
+  width: 90%;
+  padding: 1em;
+}
+
+.slider {
+  width: 100%;
+  height: 0.5em;
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  background: var(--BG-tri); /* Grey background */
+  outline: none; /* Remove outline */
+  border-radius: 0.2em;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 2em; /* Set a specific slider handle width */
+  height: 2em; /* Slider handle height */
+  background: var(--Font); /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border-radius: 50%;
+}
+
+.closeCross {
+  position: absolute;
+  cursor: pointer;
+  top: 1em;
+  right: 1em;
+  color:var(--BG-tri)
 }

@@ -1,21 +1,24 @@
 .App-actions {
   grid-area: actions;
-  background-color: #822411;
+  background-color: var(--BG-main);
+
 }
 
 .App-actions a {
   display: flex;
-  flex-grow: 1;
 }
 
 .actionButton {
-  /* margin: 0.2em 1em; */
-  /* padding: 1em 2em; */
-  flex-grow: 1;
+  outline: none;
+  font-family: inherit;
+  width: 5em;
+  margin: 0.5em 1em;
+  padding: 0 1em;
   background-color: darkgray;
   border: none;
-  background-color: #822411;
-  border: 3px solid #4d190f;
+  border-radius: 1em;
+  background-color: var(--Font);
   font-size: 1.2em;
-  color: #cebdb3;
+  color: var(--BG-tri);
+  cursor: pointer;
 }

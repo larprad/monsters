@@ -13,23 +13,19 @@ function MonsterImage(props) {
     if (status === 'edit' || status === 'new') {
       return (
         <div
-          className="monsterImg flexCenter"
+          className='monsterImg flexCenter edit'
           style={{
             backgroundImage: 'url(' + props.img + ')',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         >
-          <input
-            className="monsterImgInput"
-            onChange={props.change}
-            placeholder={props.img || 'Image URL'}
-          ></input>
+          <input className='monsterImgInput' onChange={props.change} placeholder={props.img || 'Image URL'}></input>
         </div>
       );
     } else {
       return (
-        <div className="monsterImg">
+        <div className='monsterImg'>
           <img src={props.img} alt={props.name}></img>
         </div>
       );
@@ -44,14 +40,14 @@ function MonsterName(props) {
     if (status === 'edit' || status === 'new') {
       return (
         <input
-          className="monsterTitle flexCenter"
-          placeholder="Monster name"
+          className='monsterTitle flexCenter'
+          placeholder='Monster name'
           value={props.name}
           onChange={props.change}
         ></input>
       );
     } else {
-      return <h2 className="monsterTitle flexCenter">{props.name}</h2>;
+      return <h2 className='monsterTitle flexCenter'>{props.name}</h2>;
     }
   }
   return statusCheck(props.status);
@@ -62,41 +58,17 @@ function MonsterDescription(props) {
     if (status === 'edit' || status === 'new') {
       return (
         <textarea
-          className="monsterDescription flexCenter"
-          placeholder="Description"
+          className='monsterDescription flexCenter'
+          placeholder='Description'
           value={props.description}
           onChange={props.change}
         ></textarea>
       );
     } else {
-      return <p className="monsterDescription flexCenter">{props.description}</p>;
+      return <p className='monsterDescription flexCenter'>{props.description}</p>;
     }
   }
   return statusCheck(props.status);
-}
-
-function MonsterSpecial(props) {
-  return (
-    <div className="monsterSpecial flexCenter column">
-      <ul>
-        {props.special.map((x) => (
-          <li key={x}>{x}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function MonsterSpecs(props) {
-  return (
-    <div className="monsterSpecs flexCenter column">
-      <ul>
-        {Object.entries(props.specs).map(([id, num]) => (
-          <li key={id}>{id + ': ' + num}</li>
-        ))}
-      </ul>
-    </div>
-  );
 }
 
 function MonsterPage(props) {
@@ -108,8 +80,6 @@ function MonsterPage(props) {
   const [monsterName, setMonsterName] = useState('name');
   const [monsterDescription, setMonsterDescription] = useState('description');
   const [monsterImage, setMonsterImage] = useState('');
-  const [monsterSpecial] = useState([]);
-  const [monsterSpecs] = useState({});
   const [haveLoaded, setHaveLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -196,16 +166,15 @@ function MonsterPage(props) {
       special: [],
       specs: {},
     };
-    // manipulate.saveNewMonster(monsterToSave);
+    console.log('monster to save:');
+    console.log(monsterToSave);
     const newSlug = await manipulate.saveNewMonsterServer(monsterToSave);
     if (newSlug === 'already existing') {
       setDisplayPopup(true);
       setTextPopup('Monster is already existing');
       setRedirectPopup('new');
     } else {
-      setDisplayPopup(true);
-      setTextPopup('Saved');
-      setRedirectPopup(newSlug);
+      navigate('/' + newSlug);
       statusChange('read');
     }
   }
@@ -219,6 +188,10 @@ function MonsterPage(props) {
       special: [],
       specs: {},
     };
+    console.log(`original monster slug: ${originalMonsterSlug}`);
+    console.log(`actual monster name: ${monsterName}`);
+    console.log(`monster content:`);
+    console.log(monsterToEdit);
     const newSlug = await manipulate.editMonsterServer(monsterToEdit, originalMonsterSlug);
     navigate(`/${newSlug}`);
     statusChange('read');
@@ -233,16 +206,14 @@ function MonsterPage(props) {
   ////////////////////////
 
   return (
-    <div className="App">
-      {displayPopup ? (
-        <Popup closePopup={closePopup} text={textPopup} redirect={redirectPopup} />
-      ) : null}
+    <div className='App'>
+      {displayPopup ? <Popup closePopup={closePopup} text={textPopup} redirect={redirectPopup} /> : null}
       {isLoading ? (
-        <section className="monsterSection">
-          <h2 className="loading">LOADING</h2>
+        <section className='monsterSection'>
+          <h2 className='loading'>LOADING</h2>
         </section>
       ) : !isError ? (
-        <section className="monsterSection">
+        <section className='monsterSection'>
           <MonsterImage img={monsterImage} status={status} change={handleChangeMonsterImage} />
           <MonsterName name={monsterName} status={status} change={handleChangeMonsterName} />
           <MonsterDescription
@@ -250,12 +221,10 @@ function MonsterPage(props) {
             status={status}
             change={handleChangeMonsterDescription}
           />
-          <MonsterSpecial special={monsterSpecial} status={status} />
-          <MonsterSpecs specs={monsterSpecs} status={status} />
         </section>
       ) : (
-        <section className="monsterSection">
-          <h2 className="loading">ERROR</h2>
+        <section className='monsterSection'>
+          <h2 className='loading'>ERROR</h2>
         </section>
       )}
 

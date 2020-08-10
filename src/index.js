@@ -12,6 +12,18 @@ import * as serviceWorker from './serviceWorker';
 //   Outlet,
 // } from 'react-router-dom';
 
+// Adjusting height for Android devices
+if (navigator.userAgent.match(/Android/i)) {
+  console.log('fixing height for android device)');
+  const screenHeight = Math.max(
+    document.documentElement.clientHeight || 0,
+    window.innerHeight || 0
+  );
+  console.log('screen Height ' + screenHeight + 'px');
+  document.getElementById('root').style.height = screenHeight.toString() + 'px';
+  console.log('Root ' + document.getElementById('root').style.height);
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

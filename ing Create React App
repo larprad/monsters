@@ -1,0 +1,53 @@
+[33mcommit b66e88f7fc765c44b5345b01e08e2057b4c2e468[m[33m ([m[1;36mHEAD -> [m[1;32mtryanddie[m[33m)[m
+Author: larprad <59915248+larprad@users.noreply.github.com>
+Date:   Thu Aug 6 16:03:16 2020 +0200
+
+    Clean code a bit
+
+[33mcommit fb0cad71d0743c9a00b702d89795739074793fc0[m[33m ([m[1;31morigin/tryanddie[m[33m)[m
+Author: larprad <59915248+larprad@users.noreply.github.com>
+Date:   Thu Jul 30 15:37:33 2020 +0200
+
+    Fix Android Keyboard bug
+
+[33mcommit 942d2344045d983620014a9fcc1d96f5ee5f92a8[m
+Author: larprad <59915248+larprad@users.noreply.github.com>
+Date:   Thu Jul 23 11:18:45 2020 +0200
+
+    facto backend
+
+[33mcommit c93db7279bbc4bb20550d53d4569b37da2a08dcc[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: larprad <59915248+larprad@users.noreply.github.com>
+Date:   Wed Jul 22 15:40:19 2020 +0200
+
+    make backend
+
+[33mcommit bded620a200d2585407557b643e2ac78ce9a69f5[m
+Author: larprad <59915248+larprad@users.noreply.github.com>
+Date:   Fri Jul 10 12:42:22 2020 +0200
+
+    work on loading data from server
+
+[33mcommit e099ff4c24c754af0e84a057b34d3ff1b4f8b4de[m
+Author: larprad <59915248+larprad@users.noreply.github.com>
+Date:   Tue Jun 23 15:11:45 2020 +0200
+
+    start server code
+
+[33mcommit 3605e39b5e12d0ce5f28e19a28bde983bcf24681[m
+Author: larprad <59915248+larprad@users.noreply.github.com>
+Date:   Thu Jun 18 17:57:10 2020 +0200
+
+    try to implement react hooks and router
+
+[33mcommit c1cee7208c860513ce4d0d612357874d50122702[m
+Author: larprad <59915248+larprad@users.noreply.github.com>
+Date:   Thu Jun 11 17:44:44 2020 +0200
+
+    make home layout
+
+[33mcommit e0e8da756f5e7eb85745511d8e83a62ea99f76a2[m
+Author: larprad <59915248+larprad@users.noreply.github.com>
+Date:   Thu Jun 11 15:26:15 2020 +0200
+
+    Initialize project using Create React App
