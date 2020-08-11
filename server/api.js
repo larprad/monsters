@@ -72,6 +72,7 @@ api.post('/monster', function (req, res, next) {
     (err, row) => {
       if (err) {
         console.log('error in POST');
+        console.log(err.errno);
         if (err.errno === 19) {
           res.status(500).json('already existing');
         }

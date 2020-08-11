@@ -16,6 +16,7 @@ body {
   --Font: rgb(114, 53, 53);
   --BG-tri: rgb(212, 212, 212);
   --Edit-main: rgb(216, 161, 124);
+  --Screen-w: 200px;
 }
 
 #root {
@@ -29,4 +30,21 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+@media only screen and (max-width: 400px) {
+  body {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  #root {
+    height: 100%;
+    background-color: var(--BG-main);
+    color: var(--Font);
+    display: grid;
+    grid-template: 100% / 100%;
+    grid-template-areas: 'app';
+  }
 }

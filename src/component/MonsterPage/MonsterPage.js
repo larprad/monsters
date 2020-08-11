@@ -174,6 +174,7 @@ function MonsterPage(props) {
     console.log(monsterToSave);
     const newSlug = await manipulate.saveNewMonsterServer(monsterToSave);
     if (newSlug === 'already existing') {
+      console.log('I am here');
       setDisplayPopup(true);
       setTextPopup('Monster is already existing');
       setRedirectPopup('new');

@@ -7,11 +7,17 @@ function Popup(props) {
     if (props.redirect) {
       return (
         <Link to={'/' + props.redirect}>
-          <button onClick={props.closePopup}>OK</button>
+          <button className="actionButton" onClick={props.closePopup}>
+            OK
+          </button>
         </Link>
       );
     } else {
-      return <button onClick={props.closePopup}>OK</button>;
+      return (
+        <button className="actionButton" onClick={props.closePopup}>
+          OK
+        </button>
+      );
     }
   }
 

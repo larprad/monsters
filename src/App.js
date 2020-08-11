@@ -55,7 +55,7 @@ function MonsterTuile(props) {
       navigate(`/${slug}/edit`);
     }
     return (
-      <div className="monsterTuile flexCenter spaceStart">
+      <div className="monsterTuile">
         <div className="imgTileContainer">
           <img onClick={redirect} src={image || placeholder} alt={name} />
         </div>
@@ -153,8 +153,7 @@ function Home() {
   const [monsterData, setMonsterData] = useState({});
   const [haveUpdated, setHaveUpdated] = useState(false);
   const [filterPanelDisplay, setFilterPanelDisplay] = useState(false);
-  const [monsterNumber, setMonsterNumber] = useState(5);
-
+  const [monsterNumber, setMonsterNumber] = useState(0);
   const [monsterOrder, setMonsterOrder] = useState('firstcreated');
   const [monsterCount, setMonsterCount] = useState(0);
 
@@ -178,6 +177,9 @@ function Home() {
       const countResponse = await count.json();
       console.log(countResponse);
       setMonsterCount(countResponse['count (*)']);
+      countResponse['count (*)'] > 10
+        ? setMonsterNumber(10)
+        : setMonsterNumber(countResponse['count (*)']);
     }
     getMonsterCount();
   }, []);

@@ -11,8 +11,9 @@
   outline: none;
   font-family: inherit;
   width: 5em;
-  margin: 0.5em 1em;
-  padding: 0 1em;
+  height: 2em;
+  margin: 0.5em 0.5em;
+  padding: 0 0.7em;
   background-color: darkgray;
   border: none;
   border-radius: 1em;
@@ -21,4 +22,10 @@
   color: var(--BG-tri);
 
   cursor: pointer;
+}
+
+@media only screen and (min-width: 600px) {
+  .containerFull {
+    justify-content: center;
+  }
 }
