@@ -12,6 +12,8 @@ import * as serviceWorker from './serviceWorker';
 //   Outlet,
 // } from 'react-router-dom';
 
+//   "proxy": "http://localhost:8080",
+
 // Adjusting height for Android devices
 if (navigator.userAgent.match(/Android/i)) {
   console.log('fixing height for android device)');
