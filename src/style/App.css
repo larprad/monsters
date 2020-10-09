@@ -112,6 +112,7 @@ a {
 }
 
 .filterPanel {
+  z-index: 9999;
   position: absolute;
   bottom: 100px;
   left: 0;
