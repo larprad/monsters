@@ -81,8 +81,8 @@ function MonsterPage(props) {
 
   // STATES
   ////////////////////////
-  const [monsterName, setMonsterName] = useState('name');
-  const [monsterDescription, setMonsterDescription] = useState('description');
+  const [monsterName, setMonsterName] = useState('');
+  const [monsterDescription, setMonsterDescription] = useState('');
   const [monsterImage, setMonsterImage] = useState('');
   const [haveLoaded, setHaveLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

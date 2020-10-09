@@ -158,7 +158,9 @@ function Home() {
   const [monsterCount, setMonsterCount] = useState(0);
 
   function toggleFilerPanel() {
+    console.log('displaying filter panel');
     setFilterPanelDisplay(!filterPanelDisplay);
+    console.log(filterPanelDisplay);
   }
 
   useEffect(() => {
