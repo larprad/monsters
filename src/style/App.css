@@ -112,7 +112,7 @@ a {
 }
 
 .filterPanel {
-  z-index: 9999;
+  z-index: 999;
   position: absolute;
   bottom: 100px;
   left: 0;
@@ -253,7 +253,7 @@ a {
   }
 
   .tuileText {
-    z-index: 1000;
+    z-index: 100;
     position: relative;
     flex-grow: 1;
     height: 100%;
